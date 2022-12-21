@@ -5,7 +5,7 @@ interface ReaderPageProps {}
 const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
   return (
     <div>
-      <p>this is reader</p>
+      <p>this is reader.</p>
     </div>
   );
 };

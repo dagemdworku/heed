@@ -5,6 +5,12 @@
 @layer base {
   @font-face {
     font-family: "Quicksand";
-    src: url("/fonts/Quicksand-VariableFont_wght.ttf") format("ttf");
+    src: url("/fonts/Quicksand-VariableFont_wght.ttf") format("truetype");
+  }
+
+  html,
+  body,
+  #root {
+    @apply w-full h-full font-quicksand;
   }
 }
