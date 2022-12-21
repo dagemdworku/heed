@@ -1,14 +1,10 @@
 import { FunctionComponent } from "react";
 import { useAudio } from "react-use";
 
-import {
-  PauseIcon,
-  PlayIcon,
-  SpeakerWaveIcon,
-  SpeakerXMarkIcon,
-} from "@heroicons/react/24/solid";
+import { SpeakerWaveIcon, SpeakerXMarkIcon } from "@heroicons/react/24/solid";
 import { classNames } from "../../utils/class-helper";
 import { formatTime } from "../../utils/player-helper";
+import AudioController from "./audio-player-components/audio-controller";
 import SeekerSlider from "./audio-player-components/seeker-slider";
 import VolumeSlider from "./audio-player-components/volume-slider";
 
@@ -31,22 +27,8 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
     <div className="flex items-center py-4 pr-4">
       {audio}
 
-      {/* Play / Pause controller */}
-      <div className="flex w-64 px-4 ">
-        <button
-          className="p-2 rounded-full cursor-pointer"
-          onClick={() => {
-            if (state.paused) controls.play();
-            else controls.pause();
-          }}
-        >
-          {state.paused ? (
-            <PlayIcon className={classNames(buttonClass, "w-6 h-6")} />
-          ) : (
-            <PauseIcon className={classNames(buttonClass, "w-6 h-6")} />
-          )}
-        </button>
-      </div>
+      {/* Audio controller */}
+      <AudioController state={state} controls={controls} />
 
       {/* Audio current time stamp */}
       {!!state.duration && (
