@@ -15,7 +15,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-full">
+    <div className="flex flex-col h-full">
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -78,38 +78,43 @@ const MainLayout: FunctionComponent<MainLayoutProps> = () => {
         </Dialog>
       </Transition.Root>
 
-      {/* Static sidebar for desktop */}
-      <MainNavDesktop />
-      {/* Main column */}
-      <div className="flex flex-col lg:pl-64">
-        {/* Header */}
-        <div className="sticky top-0 z-10 flex flex-shrink-0 h-16 border-b bg-bg-l dark:bg-bg-d border-b-l dark:border-b-d lg:hidden">
-          <button
-            type="button"
-            className="px-4 border-r border-b-l dark:border-b-d text-fg-l-s dark:text-fg-d-s focus:outline-none focus:ring-2 focus:ring-inset focus:ring-p lg:hidden"
-            onClick={() => setSidebarOpen(true)}
-          >
-            <span className="sr-only">Open sidebar</span>
-            <Bars3CenterLeftIcon className="w-6 h-6" aria-hidden="true" />
-          </button>
-          <div className="flex justify-between flex-1 px-4 sm:px-6 lg:px-8">
-            <div className="flex-1"></div>
-            <div className="flex items-center">
-              {/* Profile dropdown */}
-              <Menu as="div" className="relative ml-3">
-                <div>
-                  <Menu.Button className="flex items-center max-w-xs text-sm rounded-full bg-bg-l dark:bg-bg-d focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-p">
-                    <span className="sr-only">Open user menu</span>
-                    <ProfileAvatar isHeader={true} />
-                  </Menu.Button>
-                </div>
-                <ProfileDropdown isHeader={true} />
-              </Menu>
+      <div className="flex-1 w-full lg:flex">
+        {/* Static sidebar for desktop */}
+        <MainNavDesktop />
+        {/* Main column */}
+        <div className="flex flex-col h-full lg:flex-1">
+          {/* Header */}
+          <div className="sticky top-0 z-10 flex flex-shrink-0 h-16 border-b bg-bg-l dark:bg-bg-d border-b-l dark:border-b-d lg:hidden">
+            <button
+              type="button"
+              className="px-4 border-r border-b-l dark:border-b-d text-fg-l-s dark:text-fg-d-s focus:outline-none focus:ring-2 focus:ring-inset focus:ring-p lg:hidden"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <span className="sr-only">Open sidebar</span>
+              <Bars3CenterLeftIcon className="w-6 h-6" aria-hidden="true" />
+            </button>
+            <div className="flex justify-between flex-1 px-4 sm:px-6 lg:px-8">
+              <div className="flex-1"></div>
+              <div className="flex items-center">
+                {/* Profile dropdown */}
+                <Menu as="div" className="relative ml-3">
+                  <div>
+                    <Menu.Button className="flex items-center max-w-xs text-sm rounded-full bg-bg-l dark:bg-bg-d focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-p">
+                      <span className="sr-only">Open user menu</span>
+                      <ProfileAvatar isHeader={true} />
+                    </Menu.Button>
+                  </div>
+                  <ProfileDropdown isHeader={true} />
+                </Menu>
+              </div>
             </div>
           </div>
+          <div className="w-full h-full">
+            <Outlet />
+          </div>
         </div>
-        <Outlet />
       </div>
+      <div className="w-full h-12 border-t bg-bg-l dark:bg-bg-d border-b-l dark:border-b-d"></div>
     </div>
   );
 };
