@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import { supportContact } from "../constants/support-contact-constants";
 
 interface ErrorPageProps {}
 
@@ -9,9 +10,8 @@ const ErrorPage: FunctionComponent<ErrorPageProps> = () => {
       <main className="flex flex-col justify-center flex-grow w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex justify-center flex-shrink-0">
           <Link to={`/`} className="inline-flex hover:opacity-80">
-            {" "}
             <span className="sr-only">Logo</span>
-            <img className="w-auto h-12" src="/vite.svg" alt="" />
+            <img className="w-auto h-12" src="/vite.svg" alt="Logo" />
           </Link>
         </div>
         <div className="py-16">
@@ -37,33 +37,16 @@ const ErrorPage: FunctionComponent<ErrorPageProps> = () => {
         </div>
       </main>
       <footer className="flex-shrink-0 w-full px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <nav className="flex justify-center space-x-4">
-          <a
-            href="#"
-            className="text-sm font-medium text-fg-l-s dark:text-fg-d-s hover:text-fg-l-s-i dark:hover:text-fg-d-s-i"
-          >
-            Contact Support
-          </a>
-          <span
-            className="inline-block border-l border-gray-300"
-            aria-hidden="true"
-          />
-          <a
-            href="#"
-            className="text-sm font-medium text-fg-l-s dark:text-fg-d-s hover:text-fg-l-s-i dark:hover:text-fg-d-s-i"
-          >
-            Status
-          </a>
-          <span
-            className="inline-block border-l border-gray-300"
-            aria-hidden="true"
-          />
-          <a
-            href="#"
-            className="text-sm font-medium text-fg-l-s dark:text-fg-d-s hover:text-fg-l-s-i dark:hover:text-fg-d-s-i"
-          >
-            Twitter
-          </a>
+        <nav className="flex justify-center divide-x divide-b-l dark:divide-b-d">
+          {supportContact.map((item) => (
+            <Link
+              key={item.name}
+              to={item.href}
+              className="px-3 text-sm font-medium text-fg-l-s dark:text-fg-d-s hover:opacity-80"
+            >
+              {item.name}
+            </Link>
+          ))}
         </nav>
       </footer>
     </div>
