@@ -11,14 +11,14 @@ const MainNavDesktop: FunctionComponent<MainNavDesktopProps> = () => {
   const currentPath = useCurrentPath();
 
   return (
-    <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:border-r lg:border-b-l dark:lg:border-b-d lg:pt-5 lg:pb-4 bg-bg-l-s dark:bg-bg-d-s">
+    <div className="hidden lg:flex lg:flex-col lg:h-full lg:w-64 lg:border-r lg:border-b-l dark:lg:border-b-d lg:pt-5 bg-bg-l-s dark:bg-bg-d-s">
       <MainLogo />
       {/* Sidebar component, swap this element with another sidebar if you like */}
       <div className="flex flex-col flex-1 h-0 pt-2 mt-4 overflow-y-auto">
-        {/* User account dropdown */}
+        {/* User profile card */}
         <ProfileCard />
         {/* Navigation */}
-        <nav className="px-3 mt-6">
+        <nav className="flex-1 px-3 mt-6">
           <div className="space-y-1">
             {navigation.map((item) => (
               <Link
@@ -41,6 +41,16 @@ const MainNavDesktop: FunctionComponent<MainNavDesktopProps> = () => {
             ))}
           </div>
         </nav>
+
+        <div className="flex w-full p-2 border-t border-b-l dark:border-b-d bg-bg-l dark:bg-bg-d">
+          <div className="flex-1 text-fg-l dark:text-fg-d">
+            <p className="text-base font-medium">Title</p>
+            <p className="text-lg font-semibold">Chapter 1</p>
+            <p className="text-xs">1992</p>
+          </div>
+
+          <div className="h-full rounded-md bg-bg-l-s-i dark:bg-bg-d-s-i aspect-square"></div>
+        </div>
       </div>
     </div>
   );
