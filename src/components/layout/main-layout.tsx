@@ -16,7 +16,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full overflow-hidden">
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -79,7 +79,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = () => {
         </Dialog>
       </Transition.Root>
 
-      <div className="flex-1 w-full lg:flex">
+      <div className="flex-1 w-full overflow-hidden lg:flex">
         {/* Static sidebar for desktop */}
         <MainNavDesktop />
         {/* Main column */}
@@ -110,7 +110,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = () => {
               </div>
             </div>
           </div>
-          <div className="w-full h-full">
+          <div className="w-full h-full overflow-hidden ">
             <Outlet />
           </div>
         </div>

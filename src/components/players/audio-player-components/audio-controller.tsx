@@ -22,12 +22,12 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
   const canSkipForward = state.duration - state.time > 30;
 
   return (
-    <div className="flex w-64 px-4 justify-evenly">
+    <div className="flex justify-between w-48">
       {/* Backward controller */}
       <button
         className={classNames(
           canSkipBackward ? "cursor-pointer" : "opacity-25",
-          "p-2 rounded-full flex items-center"
+          "p-2 rounded-full flex items-center text-fg-l dark:text-fg-d"
         )}
         onClick={() => {
           if (canSkipBackward) controls.seek(state.time - 30);
@@ -59,7 +59,7 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
       <button
         className={classNames(
           canSkipForward ? "cursor-pointer" : "opacity-25",
-          "p-2 rounded-full flex items-center"
+          "p-2 rounded-full flex items-center text-fg-l dark:text-fg-d"
         )}
         onClick={() => {
           if (canSkipForward) controls.seek(state.time + 30);
