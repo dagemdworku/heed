@@ -23,7 +23,7 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
             </div>
           </div>
           <div className="flex-1 ">
-            <AudioPlayer src="/002.mp3" isMobile={true} />
+            <AudioPlayer isMobile={true} />
           </div>
         </div>
         <div className="mt-3">

@@ -5,11 +5,15 @@ import {
   RouterProvider,
   useLocation,
 } from "react-router-dom";
+import { useAudio } from "react-use";
+import { setupLocator } from "./app/app-locator";
 import MainLayout from "./components/layout/main-layout";
 import AboutPage from "./pages/about";
 import ErrorPage from "./pages/error";
 import HomePage from "./pages/home";
 import ReaderPage from "./pages/reader";
+import AudioPlayerService from "./services/feature/audio-player-service";
+import { ServiceLocator } from "./services/service-locator";
 
 const routes = [
   { path: "/", element: <HomePage /> },
@@ -39,8 +43,25 @@ export const useCurrentPath = () => {
 
 interface IndexProps {}
 
+setupLocator();
 const Index: FunctionComponent<IndexProps> = () => {
-  return <RouterProvider router={router} />;
+  const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
+    AudioPlayerService.name
+  );
+
+  const [audio, state, controls] = useAudio({
+    src: "/001.mp3",
+  });
+
+  audioPlayerService.initialize(state, controls);
+
+  return (
+    <div className="screen">
+      {audio}
+
+      <RouterProvider router={router} />
+    </div>
+  );
 };
 
 export default Index;

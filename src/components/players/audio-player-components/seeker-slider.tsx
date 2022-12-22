@@ -1,47 +1,38 @@
 import { FunctionComponent, useRef } from "react";
 import { useSlider } from "react-use";
-import {
-  HTMLMediaControls,
-  HTMLMediaState,
-} from "react-use/lib/factory/createHTMLMediaHook";
+import { HTMLMediaState } from "react-use/lib/factory/createHTMLMediaHook";
+import { DeepReadonly } from "ts-essentials";
+import AudioPlayerService from "../../../services/feature/audio-player-service";
+import { ServiceLocator } from "../../../services/service-locator";
 import { classNames } from "../../../utils/class-helper";
 import { formatTime } from "../../../utils/player-helper";
 
-type PlayerState = HTMLMediaState;
-type PlayerControls = HTMLMediaControls;
-
 interface SeekerSliderProps {
-  state: HTMLMediaState;
-  controls: any;
+  state?: DeepReadonly<HTMLMediaState>;
 }
 
 const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
-  const { state, controls } = props;
+  const { state } = props;
 
-  const hasAudio = !!state?.duration;
+  const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
+    AudioPlayerService.name
+  );
 
-  const latestState = useRef<PlayerState>(state);
-  latestState.current = state;
-
-  const latestControls = useRef<PlayerControls>(controls);
-  latestControls.current = controls;
+  const isStateActive = !!state?.duration;
 
   const seekAreaRef = useRef<HTMLDivElement>(null);
 
-  const seek = useSlider(seekAreaRef, {
-    onScrubStop: (value) => {
-      if (!latestState.current.duration) return;
-      latestControls.current.seek(
-        Math.round(latestState.current.duration * value)
-      );
-    },
-  });
+  const seek = state
+    ? useSlider(seekAreaRef, {
+        onScrubStop: (value) => audioPlayerService.seekSlider(value),
+      })
+    : undefined;
 
   return (
     <div
       ref={seekAreaRef}
       className={classNames(
-        hasAudio ? "cursor-pointer" : "",
+        isStateActive ? "cursor-pointer" : "",
         "relative flex items-center flex-1 h-full"
       )}
     >
@@ -49,7 +40,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
         {/* Seeker background */}
         <div
           className={classNames(
-            !hasAudio || state?.paused
+            !isStateActive || state?.paused
               ? "bg-bg-l-s dark:bg-bg-d-s"
               : "bg-bg-l-s-i dark:bg-bg-d-s-i",
             "absolute w-full h-full rounded-md"
@@ -57,7 +48,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
         />
 
         {/* Seeker buffer */}
-        {hasAudio &&
+        {isStateActive &&
           !!state.buffered &&
           state.buffered.map(
             ({ start, end }: { start: number; end: number }) => (
@@ -77,11 +68,11 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
           )}
 
         {/* Seeker media tracker */}
-        {hasAudio && (
+        {isStateActive && (
           <div>
             <div
               className={classNames(
-                !!seek.isSliding ? "opacity-0" : "",
+                !!seek!.isSliding ? "opacity-0" : "",
                 state.paused ? "bg-fg-l-s-i dark:bg-fg-d-s-i" : "bg-p",
                 "absolute h-full rounded-md"
               )}
@@ -91,7 +82,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
             />
             <div
               className={classNames(
-                !!seek.isSliding ? "opacity-0" : "",
+                !!seek!.isSliding ? "opacity-0" : "",
                 state.paused ? "bg-fg-l-s-i dark:bg-fg-d-s-i" : "bg-p",
                 "absolute w-[6px] h-3 rounded-sm"
               )}
@@ -106,7 +97,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
         )}
 
         {/* Seeker slider */}
-        {hasAudio && !!seek?.isSliding && (
+        {isStateActive && !!seek?.isSliding && (
           <div>
             <div
               className="absolute h-full rounded-md bg-fg-l-s-i dark:bg-fg-d-s-i"
@@ -126,18 +117,18 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
       </div>
 
       {/* Seeker tooltip */}
-      {hasAudio && seek.isSliding && (
+      {isStateActive && seek!.isSliding && (
         <div
           className="absolute"
           style={{
             top: -45 + "px",
-            left: seek.isSliding
-              ? `${100 * seek.value}%`
-              : `${(100 * state.time) / state.duration}%`,
+            left: seek!.isSliding
+              ? `${100 * seek!.value}%`
+              : `${(100 * state!.time) / state.duration}%`,
           }}
         >
           <span className="min-w-[80px] inline-block px-2 py-2 ml-[-50%] text-sm rounded-md shadow text-fg-l-s bg-bg-l text-center">
-            {formatTime(seek.value * state.duration)}
+            {formatTime(seek!.value * state.duration)}
           </span>
         </div>
       )}

@@ -1,5 +1,7 @@
 import { FunctionComponent } from "react";
-import { useAudio } from "react-use";
+import { useSnapshot } from "valtio";
+import AudioPlayerService from "../../services/feature/audio-player-service";
+import { ServiceLocator } from "../../services/service-locator";
 
 import { formatTime } from "../../utils/player-helper";
 import AudioController from "./audio-player-components/audio-controller";
@@ -8,22 +10,23 @@ import VolumeController from "./audio-player-components/volume-controller";
 import VolumeSlider from "./audio-player-components/volume-slider";
 
 interface AudioPlayerProps {
-  src: string;
-  autoPlay?: boolean;
   isMobile?: boolean;
 }
 
 const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
-  const { src, autoPlay = false, isMobile = false } = props;
+  const { isMobile = false } = props;
 
-  const [audio, state, controls, ref] = useAudio({
-    src,
-    autoPlay: autoPlay,
-  });
-
-  const playbackController = (
-    <AudioController state={state} controls={controls} />
+  const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
+    AudioPlayerService.name
   );
+
+  const audioPlayerServiceSnapshot = useSnapshot(
+    audioPlayerService.serviceState
+  );
+
+  const state = audioPlayerServiceSnapshot.state;
+
+  const playbackController = <AudioController state={state} />;
 
   const mediaCurrentTime = (
     <span className="text-sm select-none text-fg-l dark:text-fg-d whitespace-nowrap">
@@ -37,25 +40,15 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
     </span>
   );
 
-  const timelineSeeker = <SeekerSlider state={state} controls={controls} />;
+  const timelineSeeker = <SeekerSlider state={state} />;
 
-  const volumeController = (
-    <VolumeController state={state} controls={controls} />
-  );
+  const volumeController = <VolumeController state={state} />;
 
-  const volumeSeeker = (
-    <VolumeSlider
-      state={state}
-      value={state?.volume || 0}
-      onChange={(value) => controls.volume(value)}
-    />
-  );
+  const volumeSeeker = <VolumeSlider state={state} />;
 
   if (isMobile) {
     return (
       <div className="flex flex-col w-full px-3">
-        {audio}
-
         <div className="flex justify-between">
           {/* Audio controller */}
           {playbackController}
@@ -85,8 +78,6 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
   } else {
     return (
       <div className="flex items-center py-4 pr-4">
-        {audio}
-
         {/* Audio controller */}
         <div className="mx-8">{playbackController}</div>
 
