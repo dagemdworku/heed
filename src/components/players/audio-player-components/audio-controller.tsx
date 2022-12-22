@@ -6,19 +6,25 @@ import {
 } from "@heroicons/react/24/solid";
 import { FunctionComponent } from "react";
 import { HTMLMediaState } from "react-use/lib/factory/createHTMLMediaHook";
+import { DeepReadonly } from "ts-essentials";
+import AudioPlayerService from "../../../services/feature/audio-player-service";
+import { ServiceLocator } from "../../../services/service-locator";
 import { classNames } from "../../../utils/class-helper";
 
 interface AudioControllerProps {
-  state: HTMLMediaState;
-  controls: any;
+  state?: DeepReadonly<HTMLMediaState>;
 }
 
 const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
-  const { state, controls } = props;
+  const { state } = props;
 
-  const hasAudio = !!state?.duration;
-  const canSkipBackward = hasAudio && state.time > 30;
-  const canSkipForward = hasAudio && state.duration - state.time > 30;
+  const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
+    AudioPlayerService.name
+  );
+
+  const isStateActive = !!state?.duration;
+  const canSkipBackward = isStateActive && state.time > 30;
+  const canSkipForward = isStateActive && state.duration - state.time > 30;
 
   return (
     <div className="flex justify-between w-48">
@@ -31,7 +37,7 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
           "p-2 rounded-full flex items-center text-fg-l dark:text-fg-d"
         )}
         onClick={() => {
-          if (canSkipBackward) controls.seek(state.time - 30);
+          if (canSkipBackward) audioPlayerService.seek(state.time - 30);
         }}
         disabled={!canSkipBackward}
       >
@@ -42,18 +48,18 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
       {/* Play / Pause controller */}
       <button
         className={classNames(
-          hasAudio
+          isStateActive
             ? "cursor-pointer hover:text-p dark:hover:text-p"
             : "opacity-25",
           "p-2 rounded-full text-fg-l dark:text-fg-d"
         )}
         onClick={() => {
-          if (state.paused) controls.play();
-          else controls.pause();
+          if (state!.paused) audioPlayerService.play();
+          else audioPlayerService.pause();
         }}
-        disabled={!hasAudio}
+        disabled={!isStateActive}
       >
-        {!hasAudio || state.paused ? (
+        {!isStateActive || state.paused ? (
           <PlayIcon className="w-6 h-6" />
         ) : (
           <PauseIcon className="w-6 h-6" />
@@ -69,7 +75,7 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
           "p-2 rounded-full flex items-center text-fg-l dark:text-fg-d"
         )}
         onClick={() => {
-          if (canSkipForward) controls.seek(state.time + 30);
+          if (canSkipForward) audioPlayerService.seek(state.time + 30);
         }}
         disabled={!canSkipForward}
       >

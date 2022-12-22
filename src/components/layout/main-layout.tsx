@@ -80,7 +80,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = () => {
       </Transition.Root>
 
       <div className="flex-1 w-full overflow-hidden lg:flex">
-        {/* Static sidebar for desktop */}
+        {/* Sidebar for desktop */}
         <MainNavDesktop />
         {/* Main column */}
         <div className="flex flex-col h-full lg:flex-1">
@@ -116,7 +116,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = () => {
         </div>
       </div>
       <div className="w-full border-t bg-bg-l dark:bg-bg-d border-b-l dark:border-b-d">
-        <AudioPlayer src="/002.mp3" />
+        <AudioPlayer />
       </div>
     </div>
   );

@@ -35,7 +35,7 @@
 
   html,
   body,
-  #root {
+  .screen {
     @apply w-full h-full font-quicksand overflow-hidden;
   }
 }
