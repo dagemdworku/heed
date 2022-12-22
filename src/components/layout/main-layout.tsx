@@ -116,7 +116,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = () => {
         </div>
       </div>
       <div className="w-full border-t bg-bg-l dark:bg-bg-d border-b-l dark:border-b-d">
-        <AudioPlayer src="/001.mp3" />
+        <AudioPlayer src="/002.mp3" />
       </div>
     </div>
   );

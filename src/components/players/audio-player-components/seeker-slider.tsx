@@ -18,6 +18,8 @@ interface SeekerSliderProps {
 const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
   const { state, controls } = props;
 
+  const hasAudio = !!state?.duration;
+
   const latestState = useRef<PlayerState>(state);
   latestState.current = state;
 
@@ -38,13 +40,16 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
   return (
     <div
       ref={seekAreaRef}
-      className="relative flex items-center flex-1 h-full cursor-pointer"
+      className={classNames(
+        hasAudio ? "cursor-pointer" : "",
+        "relative flex items-center flex-1 h-full"
+      )}
     >
       <div className="relative flex w-full h-1.5 group">
         {/* Seeker background */}
         <div
           className={classNames(
-            state.paused
+            !hasAudio || state?.paused
               ? "bg-bg-l-s dark:bg-bg-d-s"
               : "bg-bg-l-s-i dark:bg-bg-d-s-i",
             "absolute w-full h-full rounded-md"
@@ -52,7 +57,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
         />
 
         {/* Seeker buffer */}
-        {!!state.duration &&
+        {hasAudio &&
           !!state.buffered &&
           state.buffered.map(
             ({ start, end }: { start: number; end: number }) => (
@@ -72,7 +77,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
           )}
 
         {/* Seeker media tracker */}
-        {!!state.duration && (
+        {hasAudio && (
           <div>
             <div
               className={classNames(
@@ -101,7 +106,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
         )}
 
         {/* Seeker slider */}
-        {!!seek.isSliding && (
+        {hasAudio && !!seek?.isSliding && (
           <div>
             <div
               className="absolute h-full rounded-md bg-fg-l-s-i dark:bg-fg-d-s-i"
@@ -121,7 +126,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
       </div>
 
       {/* Seeker tooltip */}
-      {!!state.duration && seek.isSliding && (
+      {hasAudio && seek.isSliding && (
         <div
           className="absolute"
           style={{
