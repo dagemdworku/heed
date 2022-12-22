@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import {
   createBrowserRouter,
   matchRoutes,
@@ -13,6 +13,7 @@ import ErrorPage from "./pages/error";
 import HomePage from "./pages/home";
 import ReaderPage from "./pages/reader";
 import AudioPlayerService from "./services/feature/audio-player-service";
+import BookPlayerService from "./services/feature/book-player-service";
 import { ServiceLocator } from "./services/service-locator";
 
 const routes = [
@@ -41,19 +42,31 @@ export const useCurrentPath = () => {
   return null;
 };
 
-interface IndexProps {}
-
 setupLocator();
-const Index: FunctionComponent<IndexProps> = () => {
-  const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
-    AudioPlayerService.name
-  );
 
+const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
+  AudioPlayerService.name
+);
+
+const bookPlayerService: BookPlayerService = ServiceLocator.resolve(
+  BookPlayerService.name
+);
+
+const Index: FunctionComponent<{}> = () => {
+  // Load audio
   const [audio, state, controls] = useAudio({
     src: "/001.mp3",
   });
 
-  audioPlayerService.initialize(state, controls);
+  // Load book
+  useEffect(() => {
+    bookPlayerService.load("/001.json");
+  }, []);
+
+  // update audio player state
+  useEffect(() => {
+    audioPlayerService.initialize(state, controls);
+  }, [audio]);
 
   return (
     <div className="screen">

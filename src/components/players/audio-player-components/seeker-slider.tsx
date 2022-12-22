@@ -22,11 +22,9 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
 
   const seekAreaRef = useRef<HTMLDivElement>(null);
 
-  const seek = state
-    ? useSlider(seekAreaRef, {
-        onScrubStop: (value) => audioPlayerService.seekSlider(value),
-      })
-    : undefined;
+  const seek = useSlider(seekAreaRef, {
+    onScrubStop: (value) => audioPlayerService.seekSlider(value),
+  });
 
   return (
     <div
@@ -39,6 +37,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
       <div className="relative flex w-full h-1.5 group">
         {/* Seeker background */}
         <div
+          key="seeker-background"
           className={classNames(
             !isStateActive || state?.paused
               ? "bg-bg-l-s dark:bg-bg-d-s"
@@ -53,6 +52,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
           state.buffered.map(
             ({ start, end }: { start: number; end: number }) => (
               <div
+                key="seeker-buffer"
                 className={classNames(
                   state.paused
                     ? "bg-bg-l-s-i dark:bg-bg-d-s-i"
@@ -69,7 +69,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
 
         {/* Seeker media tracker */}
         {isStateActive && (
-          <div>
+          <div key="seeker-media-tracker">
             <div
               className={classNames(
                 !!seek!.isSliding ? "opacity-0" : "",
@@ -98,7 +98,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
 
         {/* Seeker slider */}
         {isStateActive && !!seek?.isSliding && (
-          <div>
+          <div key="seeker-slider">
             <div
               className="absolute h-full rounded-md bg-fg-l-s-i dark:bg-fg-d-s-i"
               style={{
@@ -119,6 +119,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
       {/* Seeker tooltip */}
       {isStateActive && seek!.isSliding && (
         <div
+          key="seeker-tooltip"
           className="absolute"
           style={{
             top: -45 + "px",

@@ -1,9 +1,30 @@
 import { FunctionComponent } from "react";
+import { useSnapshot } from "valtio";
 import AudioPlayer from "../components/players/audio-player";
+import AudioPlayerService from "../services/feature/audio-player-service";
+import BookPlayerService from "../services/feature/book-player-service";
+import { ServiceLocator } from "../services/service-locator";
+import { isBetween } from "../utils/player-helper";
 
 interface ReaderPageProps {}
 
 const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
+  const bookPlayerService: BookPlayerService = ServiceLocator.resolve(
+    BookPlayerService.name
+  );
+
+  const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
+    AudioPlayerService.name
+  );
+
+  const bookPlayerServiceSnapshot = useSnapshot(bookPlayerService.serviceState);
+  const audioPlayerServiceSnapshot = useSnapshot(
+    audioPlayerService.serviceState
+  );
+
+  const fragment = bookPlayerServiceSnapshot.fragment;
+  const state = audioPlayerServiceSnapshot.state;
+
   return (
     <div className="flex flex-col h-full px-6 py-5 overflow-hidden bg-bg-l dark:bg-bg-d">
       <div className="flex-none">
@@ -33,39 +54,47 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
         </div>
       </div>
 
-      <div className="flex-1 mt-3 overflow-y-auto">
-        <p className="text-lg text-fg-l-s dark:text-fg-d-s">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sit
-          amet urna vitae purus ullamcorper porta. Mauris felis justo, commodo
-          quis cursus non, consequat ac magna. Morbi mauris sem, faucibus ac
-          tincidunt id, mattis ac elit.{" "}
-          <span className="font-medium text-fg-l dark:text-fg-d">
-            Ut commodo ornare volutpat.{" "}
-            <span className="font-semibold underline underline-offset-4 decoration-2">
-              Nam
-            </span>{" "}
-            eget dolor in tortor eleifend tempus.
-          </span>{" "}
-          Integer dignissim nibh in erat auctor, fermentum lacinia magna
-          vehicula. Morbi ullamcorper neque eget semper congue. Aliquam at
-          elementum nisl. Sed a neque et turpis suscipit sagittis vel malesuada
-          dolor. Nullam fringilla enim ipsum, et eleifend nisl elementum quis.
-          Nunc volutpat tellus risus, vitae finibus diam sollicitudin quis. Sed
-          quis enim ac ligula maximus fringilla eu a arcu. Vivamus scelerisque
-          sollicitudin sagittis. Aenean varius lacus urna. Proin a massa nec
-          tortor facilisis lobortis. Vestibulum ante ipsum primis in faucibus
-          orci luctus et ultrices posuere cubilia curae; Cras consectetur
-          hendrerit rutrum. Maecenas eu pellentesque leo. Mauris in mattis
-          magna. Nullam semper, erat vitae tincidunt suscipit, ipsum ipsum
-          ornare odio, non pretium neque nisl ut erat. Etiam odio lectus,
-          sollicitudin varius varius maximus, venenatis a purus. Suspendisse at
-          pulvinar ligula, vitae pellentesque ex. Orci varius natoque penatibus
-          et magnis dis parturient montes, nascetur ridiculus mus. Cras interdum
-          eros nulla, ut fermentum quam ultricies ac. Maecenas interdum enim sit
-          amet erat porta lacinia. Nulla ligula dolor, viverra in tortor eget,
-          finibus dictum nunc. Proin laoreet, felis et efficitur rutrum, mi
-          felis varius diam, vestibulum lobortis nisl diam sit amet ligula.
-        </p>
+      <div className="flex-1 mt-3 overflow-y-auto text-lg ">
+        {fragment?.fragments.map((fragment) =>
+          isBetween(
+            state?.time,
+            Number(fragment.begin),
+            Number(fragment.end)
+          ) ? (
+            fragment?.children.map((fragment) => (
+              <p
+                key={fragment.id}
+                className="text-fg-l dark:text-fg-d font-medium"
+              >
+                {fragment?.children.map((fragment) =>
+                  isBetween(
+                    state?.time,
+                    Number(fragment.begin),
+                    Number(fragment.end)
+                  ) ? (
+                    <span
+                      key={fragment.id}
+                      className="text-fg-l dark:text-fg-d font-semibold underline underline-offset-4 decoration-2"
+                    >
+                      {fragment.lines}{" "}
+                    </span>
+                  ) : (
+                    <span
+                      key={fragment.id}
+                      className="text-fg-l dark:text-fg-d font-medium"
+                    >
+                      {fragment.lines}{" "}
+                    </span>
+                  )
+                )}
+              </p>
+            ))
+          ) : (
+            <p key={fragment.id} className="text-fg-l-s dark:text-fg-d-s">
+              {fragment.lines}
+            </p>
+          )
+        )}
       </div>
     </div>
   );
