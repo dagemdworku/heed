@@ -1,11 +1,10 @@
 import { FunctionComponent } from "react";
 import { useAudio } from "react-use";
 
-import { SpeakerWaveIcon, SpeakerXMarkIcon } from "@heroicons/react/24/solid";
-import { classNames } from "../../utils/class-helper";
 import { formatTime } from "../../utils/player-helper";
 import AudioController from "./audio-player-components/audio-controller";
 import SeekerSlider from "./audio-player-components/seeker-slider";
+import VolumeController from "./audio-player-components/volume-controller";
 import VolumeSlider from "./audio-player-components/volume-slider";
 
 interface AudioPlayerProps {
@@ -22,45 +21,32 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
     autoPlay: autoPlay,
   });
 
-  const buttonClass = "text-fg-l dark:text-fg-d hover:text-p dark:hover:text-p";
-
   const playbackController = (
     <AudioController state={state} controls={controls} />
   );
 
-  const mediaCurrentTime = !!state.duration && (
+  const mediaCurrentTime = (
     <span className="text-sm select-none text-fg-l dark:text-fg-d whitespace-nowrap">
-      {formatTime(state.time)}
+      {state?.duration ? formatTime(state.time) : "--:--"}
     </span>
   );
 
-  const mediaTotalTime = !!state.duration && (
+  const mediaTotalTime = (
     <span className="text-sm select-none text-fg-l dark:text-fg-d whitespace-nowrap">
-      {formatTime(state.duration)}
+      {state?.duration ? formatTime(state.duration) : "--:--"}
     </span>
   );
 
   const timelineSeeker = <SeekerSlider state={state} controls={controls} />;
 
   const volumeController = (
-    <button
-      className="w-6 h-6 cursor-pointer"
-      onClick={() => {
-        if (state.muted) controls.unmute();
-        else controls.mute();
-      }}
-    >
-      {state.muted || !state.volume ? (
-        <SpeakerXMarkIcon className={classNames(buttonClass, "w-5 h-5")} />
-      ) : (
-        <SpeakerWaveIcon className={classNames(buttonClass, "w-5 h-5")} />
-      )}
-    </button>
+    <VolumeController state={state} controls={controls} />
   );
 
   const volumeSeeker = (
     <VolumeSlider
-      value={state.volume || 0}
+      state={state}
+      value={state?.volume || 0}
       onChange={(value) => controls.volume(value)}
     />
   );

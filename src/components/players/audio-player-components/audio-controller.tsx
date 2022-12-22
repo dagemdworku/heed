@@ -16,17 +16,18 @@ interface AudioControllerProps {
 const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
   const { state, controls } = props;
 
-  const buttonClass = "text-fg-l dark:text-fg-d hover:text-p dark:hover:text-p";
-
-  const canSkipBackward = state.time > 30;
-  const canSkipForward = state.duration - state.time > 30;
+  const hasAudio = !!state?.duration;
+  const canSkipBackward = hasAudio && state.time > 30;
+  const canSkipForward = hasAudio && state.duration - state.time > 30;
 
   return (
     <div className="flex justify-between w-48">
       {/* Backward controller */}
       <button
         className={classNames(
-          canSkipBackward ? "cursor-pointer" : "opacity-25",
+          canSkipBackward
+            ? "cursor-pointer hover:text-p dark:hover:text-p"
+            : "opacity-25",
           "p-2 rounded-full flex items-center text-fg-l dark:text-fg-d"
         )}
         onClick={() => {
@@ -34,31 +35,37 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
         }}
         disabled={!canSkipBackward}
       >
-        <ArrowSmallLeftIcon
-          className={classNames(buttonClass, "w-5 h-5 inline-block")}
-        />
+        <ArrowSmallLeftIcon className="inline-block w-5 h-5" />
         <span className="ml-1 text-sm">30s</span>
       </button>
 
       {/* Play / Pause controller */}
       <button
-        className="p-2 rounded-full cursor-pointer"
+        className={classNames(
+          hasAudio
+            ? "cursor-pointer hover:text-p dark:hover:text-p"
+            : "opacity-25",
+          "p-2 rounded-full text-fg-l dark:text-fg-d"
+        )}
         onClick={() => {
           if (state.paused) controls.play();
           else controls.pause();
         }}
+        disabled={!hasAudio}
       >
-        {state.paused ? (
-          <PlayIcon className={classNames(buttonClass, "w-6 h-6")} />
+        {!hasAudio || state.paused ? (
+          <PlayIcon className="w-6 h-6" />
         ) : (
-          <PauseIcon className={classNames(buttonClass, "w-6 h-6")} />
+          <PauseIcon className="w-6 h-6" />
         )}
       </button>
 
       {/* Forward controller */}
       <button
         className={classNames(
-          canSkipForward ? "cursor-pointer" : "opacity-25",
+          canSkipForward
+            ? "cursor-pointer hover:text-p dark:hover:text-p"
+            : "opacity-25",
           "p-2 rounded-full flex items-center text-fg-l dark:text-fg-d"
         )}
         onClick={() => {
@@ -67,9 +74,7 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
         disabled={!canSkipForward}
       >
         <span className="mr-1 text-sm">30s</span>
-        <ArrowSmallRightIcon
-          className={classNames(buttonClass, "w-5 h-5 inline-block")}
-        />
+        <ArrowSmallRightIcon className="inline-block w-5 h-5" />
       </button>
     </div>
   );
