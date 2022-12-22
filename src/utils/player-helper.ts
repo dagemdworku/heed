@@ -7,3 +7,16 @@ export const formatTime = (seconds: number) => {
 
   return `${h ? h + ":" : ""}${m > 9 ? m : "0" + m}:${s > 9 ? s : "0" + s}`;
 };
+
+export function isBetween(
+  currentTime?: number,
+  beginTime?: number,
+  endTime?: number
+): boolean {
+  if (!currentTime || !beginTime || !endTime) return false;
+
+  if (currentTime < beginTime) return false;
+  if (currentTime > endTime) return false;
+
+  return true;
+}
