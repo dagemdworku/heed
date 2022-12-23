@@ -14,6 +14,7 @@ import HomePage from "./pages/home";
 import ReaderPage from "./pages/reader";
 import AudioPlayerService from "./services/feature/audio-player-service";
 import BookPlayerService from "./services/feature/book-player-service";
+import PlayListService from "./services/feature/play-list-service";
 import { ServiceLocator } from "./services/service-locator";
 
 const routes = [
@@ -44,6 +45,10 @@ export const useCurrentPath = () => {
 
 setupLocator();
 
+const playListService: PlayListService = ServiceLocator.resolve(
+  PlayListService.name
+);
+
 const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
   AudioPlayerService.name
 );
@@ -61,6 +66,7 @@ const Index: FunctionComponent<{}> = () => {
   // Load book
   useEffect(() => {
     bookPlayerService.load("/001.json");
+    playListService.load("/play-list.json");
   }, []);
 
   // update audio player state
