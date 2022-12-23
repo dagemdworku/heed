@@ -7,7 +7,7 @@
     {
       "id": "001",
       "index": 1,
-      "name": "Chapter One - Part One",
+      "name": "Part I - Chapter One",
       "duration": 422.440,
       "audio": "/001.mp3",
       "book": "/001.json"
@@ -15,7 +15,7 @@
     {
       "id": "002",
       "index": 2,
-      "name": "Chapter One - Part Two",
+      "name": "Part I - Chapter Two",
       "duration": 822.440,
       "audio": "/002.mp3",
       "book": "/001.json"
@@ -23,9 +23,9 @@
     {
       "id": "003",
       "index": 3,
-      "name": "Chapter One - Part Three",
+      "name": "Part I - Chapter Three",
       "duration": 622.440,
-      "audio": "/002.mp3",
+      "audio": "/003.mp3",
       "book": "/001.json"
     }
   ]

@@ -6,6 +6,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useAudio } from "react-use";
+import { useSnapshot } from "valtio";
 import { setupLocator } from "./app/app-locator";
 import MainLayout from "./components/layout/main-layout";
 import AboutPage from "./pages/about";
@@ -58,16 +59,22 @@ const bookPlayerService: BookPlayerService = ServiceLocator.resolve(
 );
 
 const Index: FunctionComponent<{}> = () => {
+  const playListServiceSnapshot = useSnapshot(playListService.serviceState);
+
   // Load audio
   const [audio, state, controls] = useAudio({
-    src: "/001.mp3",
+    src: playListServiceSnapshot.currentAudio,
   });
+
+  // Load playlist
+  useEffect(() => {
+    playListService.load("/play-list.json");
+  }, []);
 
   // Load book
   useEffect(() => {
-    bookPlayerService.load("/001.json");
-    playListService.load("/play-list.json");
-  }, []);
+    bookPlayerService.load(playListServiceSnapshot.currentBook);
+  }, [playListServiceSnapshot.currentBook]);
 
   // update audio player state
   useEffect(() => {
