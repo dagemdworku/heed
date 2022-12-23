@@ -51,7 +51,7 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
           isStateActive
             ? "cursor-pointer hover:text-p dark:hover:text-p"
             : "opacity-25",
-          "p-2 rounded-full text-fg-l dark:text-fg-d"
+          "p-3 rounded-full text-fg-l dark:text-fg-d"
         )}
         onClick={() => {
           if (state!.paused) audioPlayerService.play();
@@ -60,9 +60,9 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
         disabled={!isStateActive}
       >
         {!isStateActive || state.paused ? (
-          <PlayIcon className="w-6 h-6" />
+          <PlayIcon className="w-7 h-7" />
         ) : (
-          <PauseIcon className="w-6 h-6" />
+          <PauseIcon className="w-7 h-7" />
         )}
       </button>
 

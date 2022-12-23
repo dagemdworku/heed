@@ -26,31 +26,44 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
   const fragment = bookPlayerServiceSnapshot.fragment;
   const state = audioPlayerServiceSnapshot.state;
 
+  const scrollToWord = document.getElementById("scroll-to-word");
+  if (scrollToWord) {
+    scrollToWord.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }
+
   return (
     <div className="flex flex-col h-full px-6 py-5 overflow-hidden bg-bg-l dark:bg-bg-d">
       <div className="flex-none">
-        <div className="flex items-end">
+        <div className="flex flex-col sm:items-end sm:flex-row">
           <div className="flex items-end flex-1">
-            <div className="w-32 h-32 rounded-md bg-bg-l-s-i dark:bg-bg-d-s-i"></div>
+            {/* Book artwork */}
+            <div className="w-24 h-24 overflow-hidden rounded-md sm:w-32 sm:h-32 bg-bg-l-s-i dark:bg-bg-d-s-i">
+              <img className="w-full h-full" src="/001.jpeg" alt="Cover" />
+            </div>
+
+            {/* Book: Title, Author, and published year */}
             <div className="flex-1 ml-4">
               <h3 className="text-2xl font-semibold text-fg-l-s dark:text-fg-d-s">
-                Title
+                Foundation
               </h3>
               <h2 className="text-base font-medium text-fg-l-s-i dark:text-fg-d-s-i">
-                Author
+                Isaac Asimov
               </h2>
               <h2 className="text-sm font-medium text-fg-l-s-i dark:text-fg-d-s-i">
-                year
+                1951
               </h2>
             </div>
           </div>
-          <div className="flex-1 ">
+          <div className="mt-6 sm:flex-1 sm:my-0">
             <AudioPlayer isMobile={true} />
           </div>
         </div>
-        <div className="mt-3">
-          <h1 className="text-xl font-semibold text-fg-l dark:text-fg-d">
-            Chapter
+        <div className="my-2">
+          <h1 className="text-xl font-semibold text-center text-fg-l dark:text-fg-d sm:text-start">
+            Chapter 1
           </h1>
         </div>
       </div>
@@ -69,6 +82,15 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
               >
                 {fragment?.children.map((fragment) => (
                   <span
+                    id={
+                      isBetween(
+                        state?.time,
+                        Number(fragment.begin),
+                        Number(fragment.end)
+                      )
+                        ? "scroll-to-word"
+                        : undefined
+                    }
                     key={fragment.id}
                     className={classNames(
                       isBetween(

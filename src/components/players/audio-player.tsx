@@ -49,10 +49,10 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
   if (isMobile) {
     return (
       <div className="flex flex-col w-full px-3">
-        <div className="flex justify-between">
+        <div className="flex justify-center sm:justify-between">
           {/* Audio controller */}
           {playbackController}
-          <div className="flex items-center">
+          <div className="items-center hidden sm:flex">
             {/* Volume button */}
             {volumeController}
 
@@ -65,7 +65,7 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
           {/* Audio seeker */}
           {timelineSeeker}
           <div className="h-1"></div>
-          <div className="flex justify-between">
+          <div className="justify-between hidden  sm:flex">
             {/* Audio current time stamp */}
             {mediaCurrentTime}
 

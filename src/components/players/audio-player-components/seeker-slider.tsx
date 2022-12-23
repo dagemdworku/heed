@@ -30,7 +30,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
     <div
       ref={seekAreaRef}
       className={classNames(
-        isStateActive ? "cursor-pointer" : "",
+        isStateActive ? "sm:cursor-pointer" : "",
         "relative flex items-center flex-1 h-full"
       )}
     >
@@ -84,7 +84,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
               className={classNames(
                 !!seek!.isSliding ? "opacity-0" : "",
                 state.paused ? "bg-fg-l-s-i dark:bg-fg-d-s-i" : "bg-p",
-                "absolute w-[6px] h-3 rounded-sm"
+                "absolute w-[6px] h-3 rounded-sm hidden sm:block"
               )}
               style={{
                 marginTop: "-3px",
@@ -106,7 +106,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
               }}
             />
             <div
-              className="absolute w-[6px] h-3 rounded-sm bg-p"
+              className="absolute w-[6px] h-3 rounded-sm bg-p hidden sm:block"
               style={{
                 marginTop: "-3px",
                 marginLeft: `calc(${seek.value * 100}% - 3px)`,
