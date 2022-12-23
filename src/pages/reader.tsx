@@ -4,6 +4,7 @@ import AudioPlayer from "../components/players/audio-player";
 import AudioPlayerService from "../services/feature/audio-player-service";
 import BookPlayerService from "../services/feature/book-player-service";
 import { ServiceLocator } from "../services/service-locator";
+import { classNames } from "../utils/class-helper";
 import { isBetween } from "../utils/player-helper";
 
 interface ReaderPageProps {}
@@ -54,7 +55,7 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
         </div>
       </div>
 
-      <div className="flex-1 mt-3 overflow-y-auto text-lg ">
+      <div className="flex-1 mt-3 overflow-y-auto">
         {fragment?.fragments.map((fragment) =>
           isBetween(
             state?.time,
@@ -64,35 +65,29 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
             fragment?.children.map((fragment) => (
               <p
                 key={fragment.id}
-                className="text-fg-l dark:text-fg-d font-medium"
+                className="text-xl font-medium text-fg-l-s dark:text-fg-d-s"
               >
-                {fragment?.children.map((fragment) =>
-                  isBetween(
-                    state?.time,
-                    Number(fragment.begin),
-                    Number(fragment.end)
-                  ) ? (
-                    <span
-                      key={fragment.id}
-                      className="text-fg-l dark:text-fg-d font-semibold underline underline-offset-4 decoration-2"
-                    >
-                      {fragment.lines}{" "}
-                    </span>
-                  ) : (
-                    <span
-                      key={fragment.id}
-                      className="text-fg-l dark:text-fg-d font-medium"
-                    >
-                      {fragment.lines}{" "}
-                    </span>
-                  )
-                )}
+                {fragment?.children.map((fragment) => (
+                  <span
+                    key={fragment.id}
+                    className={classNames(
+                      isBetween(
+                        state?.time,
+                        Number(fragment.begin),
+                        Number(fragment.end)
+                      )
+                        ? "text-fg-l dark:text-fg-d basic-4-active"
+                        : "",
+                      "basic-4"
+                    )}
+                  >
+                    {fragment.lines}{" "}
+                  </span>
+                ))}
               </p>
             ))
           ) : (
-            <p key={fragment.id} className="text-fg-l-s dark:text-fg-d-s">
-              {fragment.lines}
-            </p>
+            <span key={fragment.id} />
           )
         )}
       </div>
