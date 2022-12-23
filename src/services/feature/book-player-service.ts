@@ -8,20 +8,26 @@ export default class BookPlayerService {
     fragment: undefined,
   });
 
-  public async load(src: string) {
-    const fragment = await fetch(src, {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        return data;
-      });
+  public async load(src?: string) {
+    if (!src) return;
 
-    this.serviceState.fragment = fragment;
+    try {
+      const fragment = await fetch(src, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          return data;
+        });
+
+      this.serviceState.fragment = fragment;
+    } catch (e) {
+      console.log("Something went wrong loading book.");
+    }
   }
 }

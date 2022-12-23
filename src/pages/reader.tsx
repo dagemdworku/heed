@@ -23,6 +23,7 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
   const playListServiceSnapshot = useSnapshot(playListService.serviceState);
 
   const playList = playListServiceSnapshot.playList;
+  const currentChapter = playListServiceSnapshot.currentChapter;
   return (
     <div className="flex flex-col h-full px-6 py-5 overflow-hidden bg-bg-l dark:bg-bg-d">
       <div className="flex-none">
@@ -56,7 +57,7 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
         </div>
         <div className="my-2">
           <h1 className="text-xl font-semibold text-center text-fg-l dark:text-fg-d sm:text-start">
-            Chapter 1
+            {currentChapter}
           </h1>
         </div>
       </div>
