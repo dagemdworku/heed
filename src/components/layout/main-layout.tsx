@@ -8,7 +8,6 @@ import ProfileDropdown from "../dropdowns/profile-dropdown";
 import MainLogo from "../logo/main-logo";
 import MainNavDesktop from "../nav/main-nav-desktop";
 import MainNavMobile from "../nav/main-nav-mobile";
-import AudioPlayer from "../players/audio-player";
 
 interface MainLayoutProps {}
 
@@ -116,7 +115,7 @@ const MainLayout: FunctionComponent<MainLayoutProps> = () => {
         </div>
       </div>
       <div className="w-full border-t bg-bg-l dark:bg-bg-d border-b-l dark:border-b-d">
-        <AudioPlayer />
+        {/* <AudioPlayer /> */}
       </div>
     </div>
   );
