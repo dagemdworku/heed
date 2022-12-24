@@ -62,7 +62,7 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
         </div>
       </div>
 
-      <div className="flex mt-3 space-x-6">
+      <div className="flex flex-1 mt-3 space-x-6 overflow-hidden">
         <BookPlayer />
         <PlayList />
       </div>

@@ -33,7 +33,7 @@ export default class PlayListService {
 
       this.serviceState.playList = playList;
 
-      this.selectChapter("001");
+      this.selectChapter("foundation_part_001_chapter_001");
     } catch (e) {
       console.log("Something went wrong loading playlist.");
     }

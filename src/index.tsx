@@ -68,7 +68,7 @@ const Index: FunctionComponent<{}> = () => {
 
   // Load playlist
   useEffect(() => {
-    playListService.load("/play-list.json");
+    playListService.load("/play_list.json");
   }, []);
 
   // Load book

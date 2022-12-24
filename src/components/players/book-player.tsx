@@ -26,7 +26,7 @@ const BookPlayer: FunctionComponent<BookPlayerProps> = () => {
   const state = audioPlayerServiceSnapshot.state;
 
   return (
-    <div className="flex-1  overflow-y-auto">
+    <div className="flex-1 overflow-y-auto">
       {fragment?.fragments.map((fragment) =>
         isBetween(state?.time, Number(fragment.begin), Number(fragment.end)) ? (
           fragment?.children.map((fragment) => (
