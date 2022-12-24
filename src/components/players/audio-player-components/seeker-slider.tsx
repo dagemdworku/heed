@@ -52,7 +52,7 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
           state.buffered.map(
             ({ start, end }: { start: number; end: number }) => (
               <div
-                key="seeker-buffer"
+                key={`seeker-buffer-${start}-${end}`}
                 className={classNames(
                   state.paused
                     ? "bg-bg-l-s-i dark:bg-bg-d-s-i"
