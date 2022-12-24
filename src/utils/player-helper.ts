@@ -13,7 +13,12 @@ export function isBetween(
   beginTime?: number,
   endTime?: number
 ): boolean {
-  if (!currentTime || !beginTime || !endTime) return false;
+  if (
+    currentTime === undefined ||
+    beginTime === undefined ||
+    endTime === undefined
+  )
+    return false;
 
   if (currentTime < beginTime) return false;
   if (currentTime > endTime) return false;

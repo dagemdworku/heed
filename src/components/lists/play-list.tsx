@@ -19,7 +19,7 @@ const PlayList: FunctionComponent<PlayListProps> = () => {
   const currentPlaying = playListServiceSnapshot.currentPlaying;
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 overflow-y-auto">
       {playList?.chapters.map((chapter) => (
         <div
           key={chapter.id}
