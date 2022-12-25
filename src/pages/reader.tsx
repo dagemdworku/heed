@@ -1,10 +1,13 @@
+import { Tab } from "@headlessui/react";
 import { FunctionComponent } from "react";
 import { useSnapshot } from "valtio";
 import PlayList from "../components/lists/play-list";
 import AudioPlayer from "../components/players/audio-player";
 import BookPlayer from "../components/players/book-player";
+import { readerTabs } from "../constants/reader-tabs-constants";
 import PlayListService from "../services/feature/play-list-service";
 import { ServiceLocator } from "../services/service-locator";
+import { classNames } from "../utils/class-helper";
 
 interface ReaderPageProps {}
 
@@ -62,9 +65,39 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
         </div>
       </div>
 
-      <div className="flex flex-1 mt-3 space-x-6 overflow-hidden">
+      <div className="flex-1 hidden mt-3 space-x-6 overflow-hidden sm:flex">
         <BookPlayer />
         <PlayList />
+      </div>
+
+      <div className="flex flex-col flex-1 overflow-hidden sm:hidden">
+        <Tab.Group>
+          <Tab.List className="flex p-1 space-x-2 border rounded-lg bg-bg-l-s dark:bg-bg-d-s border-b-l dark:border-b-d">
+            {readerTabs.map((tab) => (
+              <Tab
+                key={tab.id}
+                className={({ selected }) =>
+                  classNames(
+                    "w-full rounded-md px-2 py-1.5 text-sm font-medium leading-5 ring-bg-l dark:ring-bg-d ring-opacity-60 ring-offset-2 ring-offset-p focus:outline-none focus:ring-2",
+                    selected
+                      ? "bg-bg-l dark:bg-bg-d shadow text-p"
+                      : "text-fg-l-s-i dark:text-fg-d-s-i hover:text-fg-l dark:hover:text-fg-d"
+                  )
+                }
+              >
+                {tab.name}
+              </Tab>
+            ))}
+          </Tab.List>
+          <Tab.Panels className="mt-2 overflow-hidden">
+            <Tab.Panel className="h-full overflow-hidden">
+              <BookPlayer />
+            </Tab.Panel>
+            <Tab.Panel className="h-full overflow-hidden">
+              <PlayList />
+            </Tab.Panel>
+          </Tab.Panels>
+        </Tab.Group>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ const PlayList: FunctionComponent<PlayListProps> = () => {
   const currentPlaying = playListServiceSnapshot.currentPlaying;
 
   return (
-    <div className="flex-1 overflow-y-auto">
+    <div className="flex-1 h-full overflow-y-auto">
       {playList?.chapters.map((chapter) => (
         <div
           key={chapter.id}
@@ -31,7 +31,7 @@ const PlayList: FunctionComponent<PlayListProps> = () => {
           )}
           onClick={() => playListService.selectChapter(chapter.id)}
         >
-          <div className="p-2">
+          <div className="p-2 text-fg-l dark:text-fg-d">
             {chapter.id === currentPlaying ? (
               <SpeakerWaveIcon className="w-5 h-5" />
             ) : (
