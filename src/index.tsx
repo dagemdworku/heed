@@ -2,6 +2,7 @@ import { FunctionComponent, useEffect } from "react";
 import {
   createBrowserRouter,
   matchRoutes,
+  Outlet,
   RouterProvider,
   useLocation,
 } from "react-router-dom";
@@ -10,6 +11,7 @@ import { useSnapshot } from "valtio";
 import { setupLocator } from "./app/app-locator";
 import MainLayout from "./components/layout/main-layout";
 import AboutPage from "./pages/about";
+import FontPage from "./pages/dev/font";
 import ErrorPage from "./pages/error";
 import HomePage from "./pages/home";
 import ReaderPage from "./pages/reader";
@@ -24,12 +26,20 @@ const routes = [
   { path: "about", element: <AboutPage /> },
 ];
 
+const devRoutes = [{ path: "font", element: <FontPage /> }];
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: routes,
+  },
+  {
+    path: "dev",
+    element: <Outlet />,
+    errorElement: <ErrorPage />,
+    children: devRoutes,
   },
 ]);
 
