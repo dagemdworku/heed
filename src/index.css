@@ -38,6 +38,58 @@
   .screen {
     @apply w-full h-full font-quicksand overflow-hidden;
   }
+
+  .header-1 {
+    @apply font-quicksand text-header-1;
+  }
+  .header-2 {
+    @apply font-quicksand text-header-2;
+  }
+  .header-3 {
+    @apply font-quicksand text-header-3;
+  }
+  .header-4 {
+    @apply font-quicksand text-header-4;
+  }
+  .body-intro {
+    @apply font-quicksand text-body-intro;
+  }
+  .body-regular {
+    @apply font-quicksand text-body-regular;
+  }
+  .body-medium {
+    @apply font-quicksand text-body-medium;
+  }
+  .body-bold {
+    @apply font-quicksand text-body-bold;
+  }
+  .body-small-regular {
+    @apply font-quicksand text-body-small-regular;
+  }
+  .body-small-medium {
+    @apply font-quicksand text-body-small-medium;
+  }
+  .body-small-bold {
+    @apply font-quicksand text-body-small-bold;
+  }
+  .caption-regular {
+    @apply font-quicksand text-caption-regular;
+  }
+  .caption-medium {
+    @apply font-quicksand text-caption-medium;
+  }
+  .caption-bold {
+    @apply font-quicksand text-caption-bold;
+  }
+  .caption-small-regular {
+    @apply font-quicksand text-caption-small-regular;
+  }
+  .caption-small-medium {
+    @apply font-quicksand text-caption-small-medium;
+  }
+  .caption-small-bold {
+    @apply font-quicksand text-caption-small-bold;
+  }
 }
 
 .basic-4 {
