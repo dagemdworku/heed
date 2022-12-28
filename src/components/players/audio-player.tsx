@@ -77,7 +77,7 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
     );
   } else {
     return (
-      <div className="flex items-start py-4 pr-4">
+      <div className="flex items-start py-4 pr-4 space-x-3">
         {/* Audio controller */}
         <div className="mx-8">{playbackController}</div>
 
@@ -90,9 +90,6 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
             {mediaTotalTime}
           </div>
         </div>
-
-        {/* Volume button */}
-        {volumeController}
 
         {/* Volume slider */}
         {volumeSeeker}
