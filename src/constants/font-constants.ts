@@ -31,6 +31,18 @@ quality. In 2019, Mirko Velimirovic converted the family into a variable font.`,
       weight: "bold",
     },
     {
+      name: "header-5",
+      size: 24,
+      height: "120%",
+      weight: "bold",
+    },
+    {
+      name: "header-6",
+      size: 22,
+      height: "120%",
+      weight: "medium",
+    },
+    {
       name: "body-intro",
       size: 20,
       height: "130%",

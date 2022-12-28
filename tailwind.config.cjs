@@ -31,6 +31,20 @@ module.exports = {
           fontWeight: "700",
         },
       ],
+      "header-5": [
+        "1.5rem",
+        {
+          lineHeight: "1.2",
+          fontWeight: "700",
+        },
+      ],
+      "header-6": [
+        "1.375rem",
+        {
+          lineHeight: "1.2",
+          fontWeight: "500",
+        },
+      ],
       "body-intro": [
         "1.25rem",
         {

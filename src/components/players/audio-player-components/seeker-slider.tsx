@@ -1,4 +1,5 @@
-import { FunctionComponent, useRef } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import { useSlider } from "react-use";
 import { HTMLMediaState } from "react-use/lib/factory/createHTMLMediaHook";
 import { DeepReadonly } from "ts-essentials";
@@ -11,8 +12,15 @@ interface SeekerSliderProps {
   state?: DeepReadonly<HTMLMediaState>;
 }
 
+const sliderHeight = 5;
+const thumbWidth = 15;
+const thumbHeight = 15;
+
 const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
   const { state } = props;
+  const [seekerPosition, setSeekerPosition] = useState(0);
+
+  const { width, ref } = useResizeDetector();
 
   const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
     AudioPlayerService.name
@@ -20,11 +28,26 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
 
   const isStateActive = !!state?.duration;
 
-  const seekAreaRef = useRef<HTMLDivElement>(null);
+  const seekAreaRef = ref;
+  const seekerWidth = width || 0;
 
   const seek = useSlider(seekAreaRef, {
-    onScrubStop: (value) => audioPlayerService.seekSlider(value),
+    onScrubStop: (value) => {
+      audioPlayerService.seekSlider(value);
+    },
   });
+
+  const seekValue = seek.value * seekerWidth;
+
+  useEffect(() => {
+    setSeekerPosition(
+      ((state?.time || 0) / (state?.duration || 1)) * seekerWidth
+    );
+  }, [state?.time]);
+
+  useEffect(() => {
+    setSeekerPosition(seekValue);
+  }, [seek.value]);
 
   return (
     <div
@@ -34,7 +57,12 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
         "relative flex items-center flex-1 h-full"
       )}
     >
-      <div className="relative flex w-full h-1.5 group">
+      <div
+        style={{
+          height: sliderHeight,
+        }}
+        className="relative flex w-full group"
+      >
         {/* Seeker background */}
         <div
           key="seeker-background"
@@ -74,23 +102,30 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
               className={classNames(
                 !!seek!.isSliding ? "opacity-0" : "",
                 state.paused ? "bg-fg-l-s-i dark:bg-fg-d-s-i" : "bg-p",
-                "absolute h-full rounded-md"
+                "absolute rounded-md"
               )}
               style={{
-                width: `${((state.time || 0) / state.duration) * 100}%`,
+                width: seekerPosition,
+                height: sliderHeight,
               }}
             />
             <div
               className={classNames(
                 !!seek!.isSliding ? "opacity-0" : "",
                 state.paused ? "bg-fg-l-s-i dark:bg-fg-d-s-i" : "bg-p",
-                "absolute w-[6px] h-3 rounded-sm hidden sm:block"
+                "absolute"
               )}
               style={{
-                marginTop: "-3px",
-                marginLeft: `calc(${
-                  ((state.time || 0) / state.duration) * 100
-                }% - 3px)`,
+                marginTop: (thumbHeight - sliderHeight) / -2,
+                width: thumbWidth,
+                height: thumbHeight,
+                borderRadius: thumbWidth / 2,
+                marginLeft:
+                  seekerPosition - thumbWidth / 2 < 0
+                    ? 0
+                    : seekerPosition + thumbWidth > seekerWidth
+                    ? seekerWidth - thumbWidth
+                    : seekerPosition - thumbWidth / 2,
               }}
             />
           </div>
@@ -102,14 +137,23 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
             <div
               className="absolute h-full rounded-md bg-fg-l-s-i dark:bg-fg-d-s-i"
               style={{
-                width: `${seek.value * 100}%`,
+                width: seekValue,
+                height: sliderHeight,
               }}
             />
             <div
-              className="absolute w-[6px] h-3 rounded-sm bg-p hidden sm:block"
+              className="absolute bg-p"
               style={{
-                marginTop: "-3px",
-                marginLeft: `calc(${seek.value * 100}% - 3px)`,
+                marginTop: (thumbHeight - sliderHeight) / -2,
+                width: thumbWidth,
+                height: thumbHeight,
+                borderRadius: thumbWidth / 2,
+                marginLeft:
+                  seekValue - thumbWidth / 2 < 0
+                    ? 0
+                    : seekValue + thumbWidth > seekerWidth
+                    ? seekerWidth - thumbWidth
+                    : seekValue - thumbWidth / 2,
               }}
             />
           </div>

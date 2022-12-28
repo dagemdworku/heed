@@ -26,7 +26,7 @@ const BookPlayer: FunctionComponent<BookPlayerProps> = () => {
   const state = audioPlayerServiceSnapshot.state;
 
   return (
-    <div className="flex-1 overflow-y-auto h-full">
+    <div className="flex-1 h-full overflow-y-auto">
       {fragment?.fragments.map((fragment) =>
         isBetween(state?.time, Number(fragment.begin), Number(fragment.end)) ? (
           fragment?.children.map((fragment) => (
@@ -63,7 +63,7 @@ const BookPlayer: FunctionComponent<BookPlayerProps> = () => {
             </p>
           ))
         ) : (
-          <span key={fragment.id} />
+          <p key={fragment.id}>{fragment.lines}</p>
         )
       )}
     </div>
