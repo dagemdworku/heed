@@ -77,22 +77,23 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
     );
   } else {
     return (
-      <div className="flex items-start py-4 pr-4 space-x-3">
+      <div className="flex flex-col items-center w-full space-y-3">
+        <div className="flex items-start w-full space-x-3">
+          {/* Audio seeker */}
+          <div className="flex flex-col flex-1">
+            {timelineSeeker}
+            <div className="h-2" />
+            <div className="flex justify-between w-full">
+              {mediaCurrentTime}
+              {mediaTotalTime}
+            </div>
+          </div>
+
+          {/* Volume slider */}
+          {volumeSeeker}
+        </div>
         {/* Audio controller */}
         <div className="mx-8">{playbackController}</div>
-
-        {/* Audio seeker */}
-        <div className="flex flex-col flex-1">
-          {timelineSeeker}
-          <div className="h-2" />
-          <div className="flex justify-between w-full">
-            {mediaCurrentTime}
-            {mediaTotalTime}
-          </div>
-        </div>
-
-        {/* Volume slider */}
-        {volumeSeeker}
       </div>
     );
   }

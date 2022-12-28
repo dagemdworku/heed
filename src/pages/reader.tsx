@@ -32,10 +32,10 @@ const ReaderPage: FunctionComponent<ReaderPageProps> = () => {
           />
         </div>
       </div>
-      <div className="w-full px-8 py-6 ">
+      <div className="flex flex-col w-full px-8 py-6 space-y-4">
         <div className="flex flex-col w-full space-y-1">
-          <p className="text-center heading-5">{playList?.name}</p>
-          <p className="text-center body-intro">{currentChapter}</p>
+          <p className="text-center heading-5">{currentChapter}</p>
+          <p className="text-center body-intro">{playList?.name}</p>
         </div>
         <AudioPlayer />
       </div>

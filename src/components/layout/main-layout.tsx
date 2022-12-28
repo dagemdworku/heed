@@ -14,6 +14,8 @@ interface MainLayoutProps {}
 const MainLayout: FunctionComponent<MainLayoutProps> = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  return <Outlet />;
+
   return (
     <div className="flex flex-col h-full overflow-hidden">
       <Transition.Root show={sidebarOpen} as={Fragment}>
