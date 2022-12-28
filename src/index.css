@@ -51,6 +51,12 @@
   .header-4 {
     @apply font-quicksand text-header-4;
   }
+  .header-5 {
+    @apply font-quicksand text-header-5;
+  }
+  .header-6 {
+    @apply font-quicksand text-header-6;
+  }
   .body-intro {
     @apply font-quicksand text-body-intro;
   }
