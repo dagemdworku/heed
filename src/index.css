@@ -39,23 +39,23 @@
     @apply w-full h-full font-quicksand overflow-hidden;
   }
 
-  .header-1 {
-    @apply font-quicksand text-header-1 text-fg-l dark:text-fg-d;
+  .heading-1 {
+    @apply font-quicksand text-heading-1 text-fg-l dark:text-fg-d;
   }
-  .header-2 {
-    @apply font-quicksand text-header-2 text-fg-l dark:text-fg-d;
+  .heading-2 {
+    @apply font-quicksand text-heading-2 text-fg-l dark:text-fg-d;
   }
-  .header-3 {
-    @apply font-quicksand text-header-3 text-fg-l dark:text-fg-d;
+  .heading-3 {
+    @apply font-quicksand text-heading-3 text-fg-l dark:text-fg-d;
   }
-  .header-4 {
-    @apply font-quicksand text-header-4 text-fg-l dark:text-fg-d;
+  .heading-4 {
+    @apply font-quicksand text-heading-4 text-fg-l dark:text-fg-d;
   }
-  .header-5 {
-    @apply font-quicksand text-header-5 text-fg-l dark:text-fg-d;
+  .heading-5 {
+    @apply font-quicksand text-heading-5 text-fg-l dark:text-fg-d;
   }
-  .header-6 {
-    @apply font-quicksand text-header-6 text-fg-l dark:text-fg-d;
+  .heading-6 {
+    @apply font-quicksand text-heading-6 text-fg-l dark:text-fg-d;
   }
   .body-intro {
     @apply font-quicksand text-body-intro text-fg-l dark:text-fg-d;
