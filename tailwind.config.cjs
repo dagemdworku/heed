@@ -3,42 +3,42 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontSize: {
-      "header-1": [
+      "heading-1": [
         "3.75rem",
         {
           lineHeight: "1.2",
           fontWeight: "700",
         },
       ],
-      "header-2": [
+      "heading-2": [
         "3rem",
         {
           lineHeight: "1.16",
           fontWeight: "700",
         },
       ],
-      "header-3": [
+      "heading-3": [
         "2.125rem",
         {
           lineHeight: "1.16",
           fontWeight: "700",
         },
       ],
-      "header-4": [
+      "heading-4": [
         "1.875rem",
         {
           lineHeight: "1.2",
           fontWeight: "700",
         },
       ],
-      "header-5": [
+      "heading-5": [
         "1.5rem",
         {
           lineHeight: "1.2",
           fontWeight: "700",
         },
       ],
-      "header-6": [
+      "heading-6": [
         "1.375rem",
         {
           lineHeight: "1.2",
