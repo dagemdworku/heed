@@ -29,13 +29,13 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
   const playbackController = <AudioController state={state} />;
 
   const mediaCurrentTime = (
-    <span className="text-sm select-none text-fg-l dark:text-fg-d whitespace-nowrap">
+    <span className="select-none caption-regular whitespace-nowrap">
       {state?.duration ? formatTime(state.time) : "--:--"}
     </span>
   );
 
   const mediaTotalTime = (
-    <span className="text-sm select-none text-fg-l dark:text-fg-d whitespace-nowrap">
+    <span className="select-none caption-regular whitespace-nowrap">
       {state?.duration ? formatTime(state.duration) : "--:--"}
     </span>
   );
@@ -65,7 +65,7 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
           {/* Audio seeker */}
           {timelineSeeker}
           <div className="h-1"></div>
-          <div className="justify-between hidden  sm:flex">
+          <div className="justify-between hidden sm:flex">
             {/* Audio current time stamp */}
             {mediaCurrentTime}
 
@@ -77,22 +77,19 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
     );
   } else {
     return (
-      <div className="flex items-center py-4 pr-4">
+      <div className="flex items-start py-4 pr-4">
         {/* Audio controller */}
         <div className="mx-8">{playbackController}</div>
 
-        {/* Audio current time stamp */}
-        {mediaCurrentTime}
-        <div className="w-2"></div>
-
         {/* Audio seeker */}
-        {timelineSeeker}
-        <div className="w-2"></div>
-
-        {/* Audio total duration time stamp */}
-        {mediaTotalTime}
-
-        <div className="w-2" />
+        <div className="flex flex-col flex-1">
+          {timelineSeeker}
+          <div className="h-2" />
+          <div className="flex justify-between w-full">
+            {mediaCurrentTime}
+            {mediaTotalTime}
+          </div>
+        </div>
 
         {/* Volume button */}
         {volumeController}

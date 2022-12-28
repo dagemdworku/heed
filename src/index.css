@@ -40,61 +40,61 @@
   }
 
   .header-1 {
-    @apply font-quicksand text-header-1;
+    @apply font-quicksand text-header-1 text-fg-l dark:text-fg-d;
   }
   .header-2 {
-    @apply font-quicksand text-header-2;
+    @apply font-quicksand text-header-2 text-fg-l dark:text-fg-d;
   }
   .header-3 {
-    @apply font-quicksand text-header-3;
+    @apply font-quicksand text-header-3 text-fg-l dark:text-fg-d;
   }
   .header-4 {
-    @apply font-quicksand text-header-4;
+    @apply font-quicksand text-header-4 text-fg-l dark:text-fg-d;
   }
   .header-5 {
-    @apply font-quicksand text-header-5;
+    @apply font-quicksand text-header-5 text-fg-l dark:text-fg-d;
   }
   .header-6 {
-    @apply font-quicksand text-header-6;
+    @apply font-quicksand text-header-6 text-fg-l dark:text-fg-d;
   }
   .body-intro {
-    @apply font-quicksand text-body-intro;
+    @apply font-quicksand text-body-intro text-fg-l dark:text-fg-d;
   }
   .body-regular {
-    @apply font-quicksand text-body-regular;
+    @apply font-quicksand text-body-regular text-fg-l dark:text-fg-d;
   }
   .body-medium {
-    @apply font-quicksand text-body-medium;
+    @apply font-quicksand text-body-medium text-fg-l dark:text-fg-d;
   }
   .body-bold {
-    @apply font-quicksand text-body-bold;
+    @apply font-quicksand text-body-bold text-fg-l dark:text-fg-d;
   }
   .body-small-regular {
-    @apply font-quicksand text-body-small-regular;
+    @apply font-quicksand text-body-small-regular text-fg-l dark:text-fg-d;
   }
   .body-small-medium {
-    @apply font-quicksand text-body-small-medium;
+    @apply font-quicksand text-body-small-medium text-fg-l dark:text-fg-d;
   }
   .body-small-bold {
-    @apply font-quicksand text-body-small-bold;
+    @apply font-quicksand text-body-small-bold text-fg-l dark:text-fg-d;
   }
   .caption-regular {
-    @apply font-quicksand text-caption-regular;
+    @apply font-quicksand text-caption-regular text-fg-l-s dark:text-fg-d-s;
   }
   .caption-medium {
-    @apply font-quicksand text-caption-medium;
+    @apply font-quicksand text-caption-medium text-fg-l-s dark:text-fg-d-s;
   }
   .caption-bold {
-    @apply font-quicksand text-caption-bold;
+    @apply font-quicksand text-caption-bold text-fg-l-s dark:text-fg-d-s;
   }
   .caption-small-regular {
-    @apply font-quicksand text-caption-small-regular;
+    @apply font-quicksand text-caption-small-regular text-fg-l-s dark:text-fg-d-s;
   }
   .caption-small-medium {
-    @apply font-quicksand text-caption-small-medium;
+    @apply font-quicksand text-caption-small-medium text-fg-l-s dark:text-fg-d-s;
   }
   .caption-small-bold {
-    @apply font-quicksand text-caption-small-bold;
+    @apply font-quicksand text-caption-small-bold text-fg-l-s dark:text-fg-d-s;
   }
 }
 
