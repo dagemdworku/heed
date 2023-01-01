@@ -5,6 +5,7 @@ import { navigation } from "../../constants/navigation-constant";
 import { classNames } from "../../utils/class-helper";
 import ProfileCard from "../cards/profile-card";
 import MainLogo from "../logo/main-logo";
+import AudioPlayerCard from "../smart/audio-player/audio-player-card/audio-player-card-view";
 interface MainNavDesktopProps {}
 
 const MainNavDesktop: FunctionComponent<MainNavDesktopProps> = () => {
@@ -41,16 +42,7 @@ const MainNavDesktop: FunctionComponent<MainNavDesktopProps> = () => {
             ))}
           </div>
         </nav>
-
-        <div className="flex w-full p-2 border-t border-b-l dark:border-b-d bg-bg-l dark:bg-bg-d">
-          <div className="flex-1 text-fg-l dark:text-fg-d">
-            <p className="text-base font-medium">Title</p>
-            <p className="text-lg font-semibold">Chapter 1</p>
-            <p className="text-xs">1992</p>
-          </div>
-
-          <div className="h-full rounded-md bg-bg-l-s-i dark:bg-bg-d-s-i aspect-square"></div>
-        </div>
+        <AudioPlayerCard />
       </div>
     </div>
   );

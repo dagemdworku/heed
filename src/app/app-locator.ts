@@ -1,3 +1,4 @@
+import { AudioPlayerCardViewModel } from "../components/smart/audio-player/audio-player-card/audio-player-card-viewmodel";
 import { LayoutViewModel } from "../components/smart/layout/layout-viewmodel";
 import LayoutService from "../services/core/layout.service";
 import AudioPlayerService from "../services/feature/audio-player-service";
@@ -29,4 +30,11 @@ export function setupLocator() {
   ServiceLocator.register(ServiceScope.factory, LayoutViewModel.name, (s) => {
     return new LayoutViewModel();
   });
+  ServiceLocator.register(
+    ServiceScope.factory,
+    AudioPlayerCardViewModel.name,
+    (s) => {
+      return new AudioPlayerCardViewModel();
+    }
+  );
 }

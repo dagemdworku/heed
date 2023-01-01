@@ -1,14 +1,15 @@
 import { proxy } from "valtio";
 import { PlayList } from "../../models/play-list";
 
+export type PlayListServiceState = {
+  playList: PlayList | undefined;
+  currentPlaying: string | undefined;
+  currentAudio: string;
+  currentBook: string | undefined;
+  currentChapter: string | undefined;
+};
 export default class PlayListService {
-  public serviceState = proxy<{
-    playList: PlayList | undefined;
-    currentPlaying: string | undefined;
-    currentAudio: string;
-    currentBook: string | undefined;
-    currentChapter: string | undefined;
-  }>({
+  public serviceState = proxy<PlayListServiceState>({
     playList: undefined,
     currentPlaying: undefined,
     currentAudio: "",

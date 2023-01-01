@@ -1,59 +1,45 @@
-import { FunctionComponent } from "react";
-import { ButtonSize } from "../../enum/button-enum";
+import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
+import { FunctionComponent, useEffect } from "react";
+import { HTMLMediaState } from "react-use/lib/factory/createHTMLMediaHook";
+import { DeepReadonly } from "ts-essentials";
+import { classNames } from "../../utils/class-helper";
 
 interface PlayButtonProps {
-  size: ButtonSize;
+  state?: DeepReadonly<HTMLMediaState>;
+  onClick: () => void;
 }
 
-const largeButtonSize = 100;
-const mediumButtonSize = 70;
-const smallButtonSize = 50;
-
 const PlayButton: FunctionComponent<PlayButtonProps> = (props) => {
-  const { size } = props;
+  const { state, onClick } = props;
 
-  switch (size) {
-    case ButtonSize.Large:
-      return (
-        <img
-          src="/play-button.svg"
-          alt="play"
-          style={{
-            width: largeButtonSize,
-            height: largeButtonSize,
-            minWidth: largeButtonSize,
-            maxHeight: largeButtonSize,
-          }}
-        />
-      );
+  const { rive, RiveComponent } = useRive({
+    src: "rive/play_pause.riv",
+    stateMachines: "State Machine 1",
+    autoplay: true,
+  });
 
-    case ButtonSize.Medium:
-      return (
-        <img
-          src="/play-button.svg"
-          alt="play"
-          style={{
-            width: mediumButtonSize,
-            height: mediumButtonSize,
-            minWidth: mediumButtonSize,
-            maxHeight: mediumButtonSize,
-          }}
-        />
-      );
-    case ButtonSize.Small:
-      return (
-        <img
-          src="/play-button.svg"
-          alt="play"
-          style={{
-            width: smallButtonSize,
-            height: smallButtonSize,
-            minWidth: smallButtonSize,
-            maxHeight: smallButtonSize,
-          }}
-        />
-      );
-  }
+  const isPlaying = useStateMachineInput(rive, "State Machine 1", "isPlaying");
+
+  const isStateActive = !!state?.duration;
+
+  useEffect(() => {
+    if (isPlaying) {
+      isPlaying.value = !isStateActive || !state.paused;
+    }
+  }, [state?.paused]);
+
+  return (
+    <button
+      className={classNames(
+        isStateActive ? "cursor-pointer" : "opacity-25",
+        "bg-p rounded-full"
+      )}
+      onClick={onClick}
+      disabled={!isStateActive}
+    >
+      <RiveComponent className="h-full aspect-square" />
+    </button>
+  );
 };
 
 export default PlayButton;
