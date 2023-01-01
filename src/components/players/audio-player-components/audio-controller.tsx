@@ -27,28 +27,14 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
   return (
     <div className="flex h-full space-x-8">
       {/* Backward controller */}
-      <button
-        className={classNames(
-          canSkipBackward
-            ? "cursor-pointer hover:text-p dark:hover:text-p"
-            : "opacity-25",
-          "p-2 rounded-full flex items-center text-fg-l dark:text-fg-d"
-        )}
+      <RewindButton
+        state={state}
         onClick={() => {
           if (canSkipBackward) audioPlayerService.seek(state.time - 30);
         }}
-        disabled={!canSkipBackward}
-      >
-        <div className="relative">
-          <RewindButton size={ButtonSize.Medium} />
-          <span className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 caption-regular">
-            30
-          </span>
-        </div>
-      </button>
+      />
 
       {/* Play / Pause controller */}
-
       <PlayButton
         state={state}
         onClick={() => {
