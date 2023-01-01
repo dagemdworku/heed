@@ -79,7 +79,7 @@ const AudioPlayer: FunctionComponent<AudioPlayerProps> = (props) => {
     return (
       <div className="flex flex-col items-center w-full space-y-3">
         {/* Audio controller */}
-        <div className="mx-8">{playbackController}</div>
+        <div className="mx-8 h-12">{playbackController}</div>
         {/* Seekers */}
         <div className="flex items-start w-full space-x-3">
           {/* Audio seeker */}
