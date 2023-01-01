@@ -23,7 +23,7 @@ const AudioPlayerCard: FunctionComponent<{}> = () => {
         style={{
           backgroundImage: `url(${playListServiceState.playList?.artwork})`,
         }}
-        className="absolute inset-0 z-0 scale-110 bg-center bg-cover blur-md opacity-60"
+        className="absolute inset-0 bottom-1/2 z-0 scale-110 bg-center bg-cover blur-md opacity-60"
       />
 
       <div className="relative inset-0 z-10 flex flex-col items-center px-3 py-8 space-y-4">
@@ -33,7 +33,7 @@ const AudioPlayerCard: FunctionComponent<{}> = () => {
           alt="Cover Image"
         />
         <div className="flex flex-col w-full space-y-1">
-          <p className="text-center caption-regular">
+          <p className="text-center caption-regular text-fg-l dark:text-fg-d">
             {playListServiceState.playList?.name}
           </p>
           <p className="text-center body-bold">
