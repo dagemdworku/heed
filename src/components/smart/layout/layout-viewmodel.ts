@@ -1,3 +1,5 @@
+import { DeepReadonly } from "ts-essentials";
+import { useSnapshot } from "valtio";
 import LayoutService, {
   LayoutServiceState,
 } from "../../../services/core/layout.service";
@@ -16,14 +18,4 @@ export class LayoutViewModel {
   setShowSideBar(value: boolean) {
     this.layoutService.setShowSideBar(value);
   }
-
-  // add() {
-  //   this.service.add();
-  //   this.count = this.service.state;
-  // }
-
-  // sub() {
-  //   this.service.sub();
-  //   this.count = this.service.state;
-  // }
 }
