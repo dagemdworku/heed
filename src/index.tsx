@@ -9,7 +9,7 @@ import {
 import { useAudio } from "react-use";
 import { useSnapshot } from "valtio";
 import { setupLocator } from "./app/app-locator";
-import LayoutView from "./components/smart/layout/layout-view";
+import Layout from "./components/smart/layout/layout-view";
 import AboutPage from "./pages/about";
 import FontPage from "./pages/dev/font";
 import ErrorPage from "./pages/error";
@@ -31,7 +31,7 @@ const devRoutes = [{ path: "font", element: <FontPage /> }];
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LayoutView />,
+    element: <Layout />,
     errorElement: <ErrorPage />,
     children: routes,
   },

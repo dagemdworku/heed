@@ -1,5 +1,4 @@
-import { useRive, useStateMachineInput } from "@rive-app/react-canvas";
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 import { HTMLMediaState } from "react-use/lib/factory/createHTMLMediaHook";
 import { DeepReadonly } from "ts-essentials";
 import { ButtonSize } from "../../../enum/button-enum";
@@ -7,6 +6,7 @@ import AudioPlayerService from "../../../services/feature/audio-player-service";
 import { ServiceLocator } from "../../../services/service-locator";
 import { classNames } from "../../../utils/class-helper";
 import ForwardButton from "../../buttons/forward-button";
+import PlayButton from "../../buttons/play-button";
 import RewindButton from "../../buttons/rewind-button";
 
 interface AudioControllerProps {
@@ -16,12 +16,6 @@ interface AudioControllerProps {
 const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
   const { state } = props;
 
-  const { rive, RiveComponent } = useRive({
-    src: "rive/play_pause.riv",
-    stateMachines: "State Machine 1",
-    autoplay: true,
-  });
-
   const audioPlayerService: AudioPlayerService = ServiceLocator.resolve(
     AudioPlayerService.name
   );
@@ -30,16 +24,8 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
   const canSkipBackward = isStateActive && state.time > 30;
   const canSkipForward = isStateActive && state.duration - state.time > 30;
 
-  const isPlaying = useStateMachineInput(rive, "State Machine 1", "isPlaying");
-
-  useEffect(() => {
-    if (isPlaying) {
-      isPlaying.value = !isStateActive || !state.paused;
-    }
-  }, [state?.paused]);
-
   return (
-    <div className="flex space-x-8">
+    <div className="flex h-full space-x-8">
       {/* Backward controller */}
       <button
         className={classNames(
@@ -63,19 +49,13 @@ const AudioController: FunctionComponent<AudioControllerProps> = (props) => {
 
       {/* Play / Pause controller */}
 
-      <button
-        className={classNames(
-          isStateActive ? "cursor-pointer" : "opacity-25",
-          " bg-p rounded-full"
-        )}
+      <PlayButton
+        state={state}
         onClick={() => {
           if (state!.paused) audioPlayerService.play();
           else audioPlayerService.pause();
         }}
-        disabled={!isStateActive}
-      >
-        <RiveComponent className="h-full aspect-square" />
-      </button>
+      />
 
       {/* Forward controller */}
       <button

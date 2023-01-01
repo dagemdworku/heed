@@ -52,9 +52,12 @@ const SeekerSlider: FunctionComponent<SeekerSliderProps> = (props) => {
   return (
     <div
       ref={seekAreaRef}
+      style={{
+        height: sliderHeight,
+      }}
       className={classNames(
         isStateActive ? "sm:cursor-pointer" : "",
-        "relative flex items-center flex-1 h-full"
+        "relative flex items-center w-full"
       )}
     >
       <div

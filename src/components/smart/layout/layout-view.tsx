@@ -11,7 +11,7 @@ import MainNavDesktop from "../../nav/main-nav-desktop";
 import MainNavMobile from "../../nav/main-nav-mobile";
 import { LayoutViewModel } from "./layout-viewmodel";
 
-const LayoutView: FunctionComponent<{}> = () => {
+const Layout: FunctionComponent<{}> = () => {
   const viewModel: LayoutViewModel = ServiceLocator.resolve(
     LayoutViewModel.name
   );
@@ -88,7 +88,7 @@ const LayoutView: FunctionComponent<{}> = () => {
         {/* Main column */}
         <div className="flex flex-col h-full lg:flex-1">
           {/* Header */}
-          <div className="sticky top-0 z-10 flex flex-shrink-0 h-16 border-b bg-bg-l dark:bg-bg-d border-b-l dark:border-b-d lg:hidden">
+          <div className="sticky top-0 z-10 flex flex-shrink-0 h-16 border-b bg-bg-l dark:bg-bg-d border-b-l dark:border-b-d">
             <button
               type="button"
               className="px-4 border-r border-b-l dark:border-b-d text-fg-l-s dark:text-fg-d-s focus:outline-none focus:ring-2 focus:ring-inset focus:ring-p lg:hidden"
@@ -125,4 +125,4 @@ const LayoutView: FunctionComponent<{}> = () => {
   );
 };
 
-export default LayoutView;
+export default Layout;

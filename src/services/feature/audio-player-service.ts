@@ -4,6 +4,10 @@ import {
 } from "react-use/lib/factory/createHTMLMediaHook";
 import { proxy } from "valtio";
 
+export type AudioPlayerServiceState = {
+  state: HTMLMediaState | undefined;
+};
+
 export default class AudioPlayerService {
   private _state?: HTMLMediaState;
   private _controls?: HTMLMediaControls;
@@ -15,9 +19,7 @@ export default class AudioPlayerService {
     this.serviceState.state = state;
   }
 
-  public serviceState = proxy<{
-    state: HTMLMediaState | undefined;
-  }>({
+  public serviceState = proxy<AudioPlayerServiceState>({
     state: undefined,
   });
 
