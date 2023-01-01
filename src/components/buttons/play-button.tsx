@@ -12,13 +12,17 @@ interface PlayButtonProps {
 const PlayButton: FunctionComponent<PlayButtonProps> = (props) => {
   const { state, onClick } = props;
 
+  const stateMachines = "State";
+  const artboard = "Play - Pause";
+
   const { rive, RiveComponent } = useRive({
     src: "rive/play_pause.riv",
-    stateMachines: "State Machine 1",
+    stateMachines: stateMachines,
+    artboard: artboard,
     autoplay: true,
   });
 
-  const isPlaying = useStateMachineInput(rive, "State Machine 1", "isPlaying");
+  const isPlaying = useStateMachineInput(rive, stateMachines, "isPlaying");
 
   const isStateActive = !!state?.duration;
 
