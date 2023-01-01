@@ -55,7 +55,7 @@ const AudioPlayerCard: FunctionComponent<{}> = () => {
             </span>
           </div>
         </div>
-        <div className="h-10">
+        <div className="h-12">
           <AudioController state={audioPlayerServiceState.state} />
         </div>
       </div>
