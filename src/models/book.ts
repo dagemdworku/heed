@@ -1,12 +1,12 @@
-export type Book = {
+export type BookDataChild = {
   id: string;
   begin: string;
   end: string;
   language: string;
   lines: string[];
-  children: Book[];
+  children: BookDataChild[];
 };
 
-export type Fragment = {
-  fragments: Book[];
+export type BookData = {
+  fragments: BookDataChild[];
 };
