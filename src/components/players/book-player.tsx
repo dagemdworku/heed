@@ -26,12 +26,16 @@ const BookPlayer: FunctionComponent<BookPlayerProps> = () => {
   );
 
   const pages = bookPlayerServiceSnapshot.pages;
-  const pageEndingTimestamps = bookPlayerServiceSnapshot.pageEndingTimestamps;
+  const pageEndingTimestamps = bookPlayerServiceSnapshot.pages.map((page) =>
+    page.paragraphs.length > 0
+      ? page.paragraphs[page.paragraphs.length - 1].end
+      : 0
+  );
   const state = audioPlayerServiceSnapshot.state;
 
   useEffect(() => {
     bookPlayerService.paginate(width, height);
-  }, [width, height, bookPlayerServiceSnapshot.fragment]);
+  }, [width, height, bookPlayerServiceSnapshot.chapterData]);
 
   return (
     <div ref={ref} className="flex-1 h-full overflow-y-auto">
@@ -40,41 +44,33 @@ const BookPlayer: FunctionComponent<BookPlayerProps> = () => {
           pageEndingTimestamps.findIndex((time) => time >= Number(state?.time)),
           0
         )
-      ]?.fragments.map((fragment) =>
-        fragment?.children.map((fragment) => (
-          <p
-            key={fragment.id}
-            className="body-intro font-medium text-fg-l-s dark:text-fg-d-s"
-          >
-            {fragment?.children.map((fragment) => (
+      ]?.paragraphs.map((paragraph) => (
+        <p
+          key={paragraph.id}
+          className="body-intro font-medium text-fg-l-s dark:text-fg-d-s"
+        >
+          {paragraph.sentences.map((sentence) =>
+            sentence.words.map((word) => (
               <span
+                key={word.id}
                 id={
-                  isBetween(
-                    state?.time,
-                    Number(fragment.begin),
-                    Number(fragment.end)
-                  )
+                  isBetween(state?.time, Number(word.begin), Number(word.end))
                     ? "scroll-to-word"
                     : undefined
                 }
-                key={fragment.id}
                 className={classNames(
-                  isBetween(
-                    state?.time,
-                    Number(fragment.begin),
-                    Number(fragment.end)
-                  )
+                  isBetween(state?.time, Number(word.begin), Number(word.end))
                     ? "text-fg-l dark:text-fg-d basic-4-active"
                     : "",
                   "basic-4"
                 )}
               >
-                {fragment.lines}{" "}
+                {word.word}{" "}
               </span>
-            ))}
-          </p>
-        ))
-      )}
+            ))
+          )}
+        </p>
+      ))}
     </div>
   );
 };
