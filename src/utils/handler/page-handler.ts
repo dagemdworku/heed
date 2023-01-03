@@ -1,9 +1,9 @@
+import { ChapterData, Page, Paragraph } from "../../models/chapter-data";
 import {
-  ChapterData,
-  Page,
-  Paragraph,
-  Sentence,
-} from "../../models/chapter-data";
+  breakParagraph,
+  divideParagraph,
+  PageBreak,
+} from "./paragraph-handler";
 
 export async function paginateChapter(
   chapterData: ChapterData,
@@ -20,85 +20,47 @@ export async function paginateChapter(
 
   for (var i = 0; i < chapterData.paragraphs.length; i++) {
     const paragraph: Paragraph = chapterData.paragraphs[i];
-    const text = _getParagraphText(paragraph);
-    const paragraphHeight = await _getLinesHeight(
-      text,
+    const pageBreak = await breakParagraph(
+      paragraph,
       maxWidth,
+      maxHeight,
+      height,
       font,
       lineHeight
     );
 
-    height += paragraphHeight;
+    height += pageBreak.height;
 
-    if (height <= maxHeight) {
-      _addParagraph(pages, paragraph);
+    if (height > maxHeight) {
+      height = pageBreak.height - pageBreak.croppedHeight;
+
+      _addPage(pages, paragraph, pageBreak);
     } else {
-      height = paragraphHeight;
-      _addPage(pages);
       _addParagraph(pages, paragraph);
     }
   }
   return pages;
 }
 
-function _addPage(pages: Page[]) {
-  const page: Page = { paragraphs: [] };
-  pages.push(page);
+function _addPage(pages: Page[], paragraph?: Paragraph, pageBreak?: PageBreak) {
+  if (paragraph) {
+    if (
+      pageBreak &&
+      !(pageBreak.sentenceBreakIndex == 0 && pageBreak.wordBreakIndex == 0)
+    ) {
+      const dividedParagraph = divideParagraph(paragraph, pageBreak);
+      _addParagraph(pages, dividedParagraph.first);
+      pages.push({ paragraphs: [] });
+      _addParagraph(pages, dividedParagraph.second);
+    } else {
+      pages.push({ paragraphs: [] });
+      _addParagraph(pages, paragraph);
+    }
+  } else {
+    pages.push({ paragraphs: [] });
+  }
 }
 
 function _addParagraph(pages: Page[], paragraph: Paragraph) {
   pages[pages.length - 1].paragraphs.push(paragraph);
-}
-
-async function _getLinesHeight(
-  text: string,
-  maxWidth: number,
-  font: string,
-  lineHeight: number
-): Promise<number> {
-  if (text.length == 0 || maxWidth == 0) return 0;
-
-  await document.fonts.load(font);
-
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
-
-  if (!context) return 0;
-
-  context.font = font;
-
-  const words = text.split(" ");
-
-  let height = 0;
-  let line = "";
-
-  for (const word of words) {
-    const lineWithWord = line + word + " ";
-    const lineWidth = context.measureText(lineWithWord).width;
-
-    if (lineWidth > maxWidth) {
-      height += context.measureText(line).fontBoundingBoxAscent;
-      line = word + " ";
-    } else {
-      line = lineWithWord;
-    }
-  }
-
-  height += context.measureText(line).fontBoundingBoxAscent;
-
-  return height * lineHeight;
-}
-
-function _getParagraphText(paragraph: Paragraph): string {
-  let text: string = "";
-  for (var i = 0; i < paragraph.sentences.length; i++) {
-    const sentence: Sentence = paragraph.sentences[i];
-    for (var j = 0; j < sentence.words.length; j++) {
-      const word = sentence.words[j].word;
-      text += `${word} `;
-    }
-    text += " ";
-  }
-
-  return text;
 }
