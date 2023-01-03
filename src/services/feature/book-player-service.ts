@@ -36,10 +36,6 @@ export default class BookPlayerService {
     }
   }
 
-  // possible operations
-  // - page fits
-  // - page doesn't fit
-
   public async paginate(maxWidth?: number, maxHeight?: number) {
     if (!this.serviceState.chapterData || !maxWidth || !maxHeight) return;
 
