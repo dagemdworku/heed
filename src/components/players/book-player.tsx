@@ -7,7 +7,7 @@ import AudioPlayerService from "../../services/feature/audio-player-service";
 import BookPlayerService from "../../services/feature/book-player-service";
 import { ServiceLocator } from "../../services/service-locator";
 import { classNames } from "../../utils/class-helper";
-import { isBetween } from "../../utils/player-helper";
+import { isBefore } from "../../utils/player-helper";
 
 interface BookPlayerProps {}
 
@@ -35,7 +35,7 @@ const BookPlayer: FunctionComponent<BookPlayerProps> = () => {
   );
   const state = audioPlayerServiceSnapshot.state;
 
-  const additionalRow = 2;
+  const additionalRow = 1;
 
   const playingPageIndex = Math.max(
     pageEndingTimestamps.findIndex((time) => time >= Number(state?.time)),
@@ -47,8 +47,8 @@ const BookPlayer: FunctionComponent<BookPlayerProps> = () => {
   }, [width, height, bookPlayerServiceSnapshot.chapterData]);
 
   return (
-    <div className="flex flex-row flex-1 h-full overflow-y-hidden">
-      <div ref={ref} className="flex-1 h-full overflow-y-auto">
+    <div className="flex flex-row flex-1 h-full p-6 space-x-6 overflow-y-hidden">
+      <div ref={ref} className="page">
         <BookPage
           page={
             pages[
@@ -67,7 +67,7 @@ const BookPlayer: FunctionComponent<BookPlayerProps> = () => {
           1;
 
         return (
-          <div key={`page-${index}`} className="flex-1 h-full overflow-y-auto">
+          <div key={`page-${index}`} className="page">
             {pages.length > pageIndex ? (
               <BookPage page={pages[pageIndex]} time={state?.time} />
             ) : (
@@ -93,22 +93,15 @@ const BookPage: FunctionComponent<PageProps> = (props) => {
       {page?.paragraphs.map((paragraph) => (
         <p
           key={paragraph.id}
-          className="font-medium body-intro text-fg-l-s dark:text-fg-d-s"
+          className="font-medium body-intro text-fg-l dark:text-fg-d"
         >
           {paragraph.sentences.map((sentence) =>
             sentence.words.map((word) => (
               <span
                 key={word.id}
-                id={
-                  isBetween(time, word.begin, word.end)
-                    ? "scroll-to-word"
-                    : undefined
-                }
                 className={classNames(
-                  isBetween(time, word.begin, word.end)
-                    ? "text-fg-l dark:text-fg-d basic-4-active"
-                    : "",
-                  "basic-4"
+                  isBefore(time, word.begin) ? "opacity-100" : "opacity-60",
+                  "word"
                 )}
               >
                 {word.word}{" "}
