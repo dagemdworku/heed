@@ -25,3 +25,11 @@ export function isBetween(
 
   return true;
 }
+
+export function isBefore(currentTime?: number, comparedTime?: number): boolean {
+  if (currentTime === undefined || comparedTime === undefined) return false;
+
+  if (currentTime < comparedTime) return false;
+
+  return true;
+}

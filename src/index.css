@@ -98,14 +98,12 @@
   }
 }
 
-.basic-4 {
-  background: linear-gradient(currentColor 0 0);
-  background-size: var(--size, 0) 2px;
-  background-position: var(--position, 0) 100%;
-  background-repeat: no-repeat;
-  transition: 0.1s, background-position 0s 0.1s;
-}
-.basic-4-active {
-  --size: 100%;
-  --position: 100%;
+@layer components {
+  .page {
+    @apply flex-1 h-full overflow-y-auto;
+  }
+
+  .word {
+    @apply transition-opacity ease-in-out duration-500;
+  }
 }
